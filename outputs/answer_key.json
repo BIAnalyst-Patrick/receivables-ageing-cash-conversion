@@ -13,6 +13,17 @@
     "d61_90": "265369.11",
     "d90_plus": "8056069.60"
   },
+  "derived_shares_pct": {
+    "overdue_share_of_ar": "64.10",
+    "d90_plus_share_of_ar": "47.87",
+    "d90_plus_share_of_overdue": "74.68",
+    "recoverable_share_of_overdue": "62.40",
+    "top3_overdue_share": "47.05",
+    "top3_recovery_share": "46.52",
+    "top5_overdue_share": "62.28",
+    "top5_recovery_share": "61.01",
+    "provision_share_of_ar": "22.44"
+  },
   "dso": "130.87",
   "best_possible_dso": "46.98",
   "dio": "47.87",

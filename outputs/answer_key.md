@@ -23,6 +23,23 @@ means every number is reproduced exactly.
 | Expected credit loss provision | 3,776,087.55 |
 | Cash recoverable now | 6,731,146.40 |
 
+## Shares quoted in the README
+
+These are the percentages the write-up leans on, so they are published
+here rather than only appearing in prose.
+
+| Share | Value |
+|---|---:|
+| Overdue as a share of receivables | 64.10% |
+| 90+ as a share of receivables | 47.87% |
+| 90+ as a share of overdue | 74.68% |
+| Recoverable as a share of overdue | 62.40% |
+| Top 3 accounts, share of overdue | 47.05% |
+| Top 3 accounts, share of recoverable cash | 46.52% |
+| Top 5 accounts, share of overdue | 62.28% |
+| Top 5 accounts, share of recoverable cash | 61.01% |
+| Provision as a share of receivables | 22.44% |
+
 ## Ageing buckets
 
 | Bucket | Balance | Share of receivables |

@@ -38,6 +38,17 @@ def analyse(ledger: Ledger) -> dict:
         closing_current=buckets["current"],
     )
 
+    top3 = chase[:3]
+    top5 = chase[:5]
+
+    def share(part: Decimal, whole: Decimal) -> Decimal:
+        if not whole:
+            return Decimal("0")
+        return (part / whole * 100).quantize(Decimal("0.01"))
+
+    total_ar = metrics.total_ar(ledger, as_of)
+    provision = metrics.expected_credit_loss(ledger, as_of)
+
     return {
         "as_of": as_of.isoformat(),
         "fingerprint": fingerprint(ledger),
@@ -46,8 +57,20 @@ def analyse(ledger: Ledger) -> dict:
         "open_invoices": sum(1 for i in ledger.invoices if i.outstanding > 0),
         "revenue_last_90": sales_90,
         "buckets": buckets,
-        "total_ar": metrics.total_ar(ledger, as_of),
+        "total_ar": total_ar,
         "overdue_ar": metrics.overdue_ar(ledger, as_of),
+        "overdue_share_of_ar": share(metrics.overdue_ar(ledger, as_of), total_ar),
+        "d90_plus_share_of_ar": share(buckets["d90_plus"], total_ar),
+        "d90_plus_share_of_overdue": share(buckets["d90_plus"], metrics.overdue_ar(ledger, as_of)),
+        "recoverable_share_of_overdue": share(unlock["recoverable_now"], metrics.overdue_ar(ledger, as_of)),
+        "top3_overdue_share": share(sum((c.overdue_balance for c in top3), Decimal("0")),
+                                    metrics.overdue_ar(ledger, as_of)),
+        "top3_recovery_share": share(sum((c.expected_recovery for c in top3), Decimal("0")),
+                                     unlock["recoverable_now"]),
+        "top5_overdue_share": share(sum((c.overdue_balance for c in top5), Decimal("0")),
+                                    metrics.overdue_ar(ledger, as_of)),
+        "top5_recovery_share": share(sum((c.expected_recovery for c in top5), Decimal("0")),
+                                     unlock["recoverable_now"]),
         "disputed_balance": metrics.disputed_balance(ledger, as_of),
         "unapplied_cash": ledger.unapplied_cash,
         "dso": dso,
@@ -56,7 +79,8 @@ def analyse(ledger: Ledger) -> dict:
         "dpo": dpo,
         "ccc": ccc,
         "cei": cei,
-        "provision": metrics.expected_credit_loss(ledger, as_of),
+        "provision": provision,
+        "provision_share_of_ar": share(provision, total_ar),
         "chase": chase,
         "terms": decisions.terms_changes(ledger, as_of),
         "unlock": unlock,
@@ -175,6 +199,13 @@ def write_outputs(ledger: Ledger, result: dict, checks: list[tuple[str, bool, st
         "disputed_balance": str(result["disputed_balance"]),
         "unapplied_cash": str(result["unapplied_cash"]),
         "buckets": {k: str(v) for k, v in result["buckets"].items()},
+        "derived_shares_pct": {
+            k: str(result[k]) for k in (
+                "overdue_share_of_ar", "d90_plus_share_of_ar", "d90_plus_share_of_overdue",
+                "recoverable_share_of_overdue", "top3_overdue_share", "top3_recovery_share",
+                "top5_overdue_share", "top5_recovery_share", "provision_share_of_ar",
+            )
+        },
         "dso": str(result["dso"]),
         "best_possible_dso": str(result["best_possible_dso"]),
         "dio": str(result["dio"]),
@@ -212,6 +243,23 @@ def write_outputs(ledger: Ledger, result: dict, checks: list[tuple[str, bool, st
         f"| Collection effectiveness index | {result['cei']}% |",
         f"| Expected credit loss provision | {_money(result['provision'])} |",
         f"| Cash recoverable now | {_money(result['unlock']['recoverable_now'])} |",
+        "",
+        "## Shares quoted in the README",
+        "",
+        "These are the percentages the write-up leans on, so they are published",
+        "here rather than only appearing in prose.",
+        "",
+        "| Share | Value |",
+        "|---|---:|",
+        f"| Overdue as a share of receivables | {result['overdue_share_of_ar']}% |",
+        f"| 90+ as a share of receivables | {result['d90_plus_share_of_ar']}% |",
+        f"| 90+ as a share of overdue | {result['d90_plus_share_of_overdue']}% |",
+        f"| Recoverable as a share of overdue | {result['recoverable_share_of_overdue']}% |",
+        f"| Top 3 accounts, share of overdue | {result['top3_overdue_share']}% |",
+        f"| Top 3 accounts, share of recoverable cash | {result['top3_recovery_share']}% |",
+        f"| Top 5 accounts, share of overdue | {result['top5_overdue_share']}% |",
+        f"| Top 5 accounts, share of recoverable cash | {result['top5_recovery_share']}% |",
+        f"| Provision as a share of receivables | {result['provision_share_of_ar']}% |",
         "",
         "## Ageing buckets",
         "",
