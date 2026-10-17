@@ -149,7 +149,7 @@ No installation. The analysis is standard library; only the charts need Pillow.
 git clone https://github.com/BIAnalyst-Patrick/receivables-ageing-cash-conversion
 cd receivables-ageing-cash-conversion
 
-make test    # 50 tests, including a drift guard on the published answer key
+make test    # full suite, including a drift guard on the published answer key
 make run     # regenerates the ledger, tables, answer key and charts
 ```
 
@@ -167,9 +167,9 @@ its own sort order — rather than against numbers copied into a file.
 2. **Receivables arithmetic an accountant would sign** — ageing, DSO,
    best-possible DSO, collection effectiveness, a CCC with real inventory and
    payables legs, and an IFRS 9-shaped provision.
-3. **Measures computed by tested code.** Not a spreadsheet screenshot: 50 tests,
-   including edge cases (due-today, one-day-late, part-payments, no-history
-   customers, zero-sales guards).
+3. **Measures computed by tested code.** Not a spreadsheet screenshot: a tested
+   pipeline covering the edge cases (due-today, one-day-late, part-payments,
+   no-history customers, zero-sales guards).
 4. **A ranking that says what to do on Monday**, with an owner and a review date
    attached to each action.
 
