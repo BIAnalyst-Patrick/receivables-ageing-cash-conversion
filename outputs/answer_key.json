@@ -1,0 +1,108 @@
+{
+  "as_of": "2026-06-30",
+  "fingerprint": "b486c28acb5e74af0f5d763611651c6ad35c2c579b32d9ea3e7428ac6edb1a8a",
+  "revenue_last_90": "11573406.45",
+  "total_ar": "16828686.74",
+  "overdue_ar": "10787346.18",
+  "disputed_balance": "83931.70",
+  "unapplied_cash": "12500.00",
+  "buckets": {
+    "current": "6041340.56",
+    "d1_30": "2161614.94",
+    "d31_60": "304292.53",
+    "d61_90": "265369.11",
+    "d90_plus": "8056069.60"
+  },
+  "dso": "130.87",
+  "best_possible_dso": "46.98",
+  "dio": "47.87",
+  "dpo": "38.00",
+  "ccc": "140.74",
+  "cei": "49.12",
+  "provision": "3776087.55",
+  "unlock": {
+    "dso_days": "130.87",
+    "best_possible_dso_days": "46.98",
+    "dso_gap_days": "83.89",
+    "cash_tied_up_in_overdue": "10787346.18",
+    "recoverable_now": "6731146.40",
+    "total": "6731146.40"
+  },
+  "checks": [
+    {
+      "check": "Ageing buckets reconcile to total receivables",
+      "passed": true,
+      "detail": "sum(buckets)=16828686.74 total_ar=16828686.74"
+    },
+    {
+      "check": "Receivables are positive",
+      "passed": true,
+      "detail": "total_ar=16828686.74"
+    },
+    {
+      "check": "Overdue is a subset of receivables",
+      "passed": true,
+      "detail": "overdue=10787346.18 of 16828686.74"
+    },
+    {
+      "check": "DSO is at least best-possible DSO",
+      "passed": true,
+      "detail": "dso=130.87 bpdso=46.98"
+    },
+    {
+      "check": "Cash conversion cycle equals DSO + DIO - DPO",
+      "passed": true,
+      "detail": "ccc=140.74 components=130.87+47.87-38.00"
+    },
+    {
+      "check": "Collection effectiveness index is a percentage",
+      "passed": true,
+      "detail": "cei=49.12"
+    },
+    {
+      "check": "Provision does not exceed receivables",
+      "passed": true,
+      "detail": "provision=3776087.55 of 16828686.74"
+    },
+    {
+      "check": "Chase list is ranked by expected recovery",
+      "passed": true,
+      "detail": "52 accounts ranked"
+    },
+    {
+      "check": "No expected recovery exceeds the balance owed",
+      "passed": true,
+      "detail": "max recovery=1398526.78"
+    },
+    {
+      "check": "Realistic recovery never exceeds the gross overdue balance",
+      "passed": true,
+      "detail": "recoverable=6731146.40 tied_up=10787346.18"
+    },
+    {
+      "check": "Every invoice's due date follows its customer's terms",
+      "passed": true,
+      "detail": "964 invoices checked"
+    },
+    {
+      "check": "No invoice is dated after the reporting date",
+      "passed": true,
+      "detail": "as_of=2026-06-30"
+    },
+    {
+      "check": "Days-to-late is non-negative for every customer",
+      "passed": true,
+      "detail": "60 customers with payment history"
+    },
+    {
+      "check": "Regenerating from the same seed reproduces the ledger exactly",
+      "passed": true,
+      "detail": "fingerprint=b486c28acb5e74af..."
+    },
+    {
+      "check": "Chase list covers every customer with an overdue balance",
+      "passed": true,
+      "detail": "52 accounts"
+    }
+  ]
+}

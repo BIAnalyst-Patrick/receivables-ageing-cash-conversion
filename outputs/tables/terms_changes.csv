@@ -1,0 +1,18 @@
+customer_id,customer,current_terms_days,recommended_terms_days,recommended_terms_label,weighted_days_late,overdue_balance
+C042,Giza Supplies,30,0,Cash on delivery,39.87,38659.86
+C049,Nuru Traders,30,0,Cash on delivery,37.69,28852.81
+C038,Chachu Supplies,30,0,Cash on delivery,35.37,54263.99
+C035,Rehema Distributors,30,0,Cash on delivery,32.87,5874.69
+C044,Imani Stores,15,0,Cash on delivery,32.24,12472.88
+C004,Juja Fresh Mart,60,30,30 days,30.95,2215161.94
+C022,Faraja Stores,45,30,30 days,26.34,219387.76
+C006,Tumaini Stores,45,30,30 days,24.62,1134558.07
+C002,Baraka Traders,60,30,30 days,23.27,1725877.31
+C041,Furaha Distributors,30,0,Cash on delivery,21.09,28824.51
+C016,Mwangaza Wholesale,45,30,30 days,19.92,316718.06
+C025,Songa Supplies,45,30,30 days,19.15,182584.43
+C017,Tembo Traders,45,30,30 days,17.87,142763.92
+C012,Simba Wholesale,45,30,30 days,16.55,216106.63
+C010,Sunrise Merchants,45,30,30 days,16.09,165410.36
+C051,Pendo Stores,30,0,Cash on delivery,15.74,30230.23
+C040,Ekari Traders,15,0,Cash on delivery,15.42,17543.83
