@@ -43,7 +43,7 @@ and in `docs/02_recommendations.md`, with an owner and a review date on every ac
 | DSO | **130.87 days** | Against a best possible of **46.98** |
 | Collection effectiveness | **49.1%** | Collecting less than half of what was collectible |
 | Expected credit loss | KES 3.78M | 22.4% of receivables, from the age profile |
-| Cash recoverable now | **KES 6.73M** | 62.4% of the overdue balance |
+| Estimated cash recoverable (modelled, not collected) | **KES 6.73M** | 62.4% of the overdue balance |
 
 ## 3. Where the money actually sits
 
@@ -103,14 +103,37 @@ paperwork — but the terms are what let an account 434 days overdue stay on
 | Figure | Value |
 |---|--:|
 | Cash past its due date | 10,787,346 |
-| Realistically recoverable now | **6,731,146** |
-| Recoverable from the top five | 4,106,405 |
+| Estimated cash recoverable (modelled, not collected) | **6,731,146** |
+| Estimated recoverable from the top five | 4,106,405 |
 | Provision implied by the age profile | 3,776,088 |
 
 The cash conversion cycle is **140.7 days** — DSO 130.9, plus inventory 47.9,
 minus payables 38.0. Every day of DSO is worth KES 128,593 of sales; the 83.9-day
 gap to best-possible DSO is the size of the hole, and it is the same cash as the
 overdue balance seen from a different angle. They are not two opportunities.
+
+### How the 6.73M is estimated
+
+A transparent rule, not a fitted model — and **modelled potential recovery, not
+cash collected**. Each customer's overdue balances are haircut by age, adjusted
+for their risk grade, and capped at the balance owed
+([`recv/decisions.py`](recv/decisions.py); the algebra is written out in
+[`docs/01_method.md`](docs/01_method.md)):
+
+| Age of the balance | Recovery rate |
+|---|---:|
+| 1-30 days | 98% |
+| 31-60 days | 92% |
+| 61-90 days | 80% |
+| 90+ days | 55% |
+
+then multiplied by the customer's risk grade — **A ×1.05, B ×1.00, C ×0.90** —
+and never allowed to exceed **100% of the balance owed**.
+
+**Nothing here is cash already collected.** This is a point-in-time snapshot of a
+synthetic ledger with no post-period receipts to observe: KES 10.79M is the cash
+tied up in overdue balances, KES 6.73M is what the rule above estimates could be
+recovered from it — two views of the same money, and neither is money in the bank.
 
 ## 7. Facts, hypotheses, and the edge of what this proves
 
